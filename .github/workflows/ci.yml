@@ -3,7 +3,7 @@ name: Deploy All Odoo Modules
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   deploy:
@@ -25,6 +25,9 @@ jobs:
         run: |
           sc.exe stop "$env:ODOO_SERVICE_NAME"
           Start-Sleep -Seconds 15
+
+        shell: powershell
+
 
       - name: Copy all modules (exclude .github and .gitignore)
         run: |
