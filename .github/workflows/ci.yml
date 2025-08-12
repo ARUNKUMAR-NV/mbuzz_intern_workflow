@@ -24,13 +24,16 @@ jobs:
           Stop-Service -Name $env:ODOO_SERVICE_NAME -Force
           Start-Sleep -Seconds 15
 
-      - name: Copy all modules (exclude .github and .gitignore)
+      - name: Copy all modules (exclude .github, .gitignore, and .git)
         run: |
           $repoRoot = (Resolve-Path "$PWD").Path
           $dst = $env:ODOO_CUSTOM_ADDONS_DIR
           
-          # Copy everything except .github folder and .gitignore
-          robocopy.exe "$repoRoot" "$dst" /E /XO /XD ".github" /XF ".gitignore" /R:2 /W:3 /MT:4
+         
+          robocopy.exe "$repoRoot" "$dst" /E /XO /XD ".github" ".git" /XF ".gitignore" /R:2 /W:3 /MT:4
+          
+          if ($LASTEXITCODE -lt 8) { exit 0 } else { exit $LASTEXITCODE }
+
 
       - name: Start Odoo service
         run: |
