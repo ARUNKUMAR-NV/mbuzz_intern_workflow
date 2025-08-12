@@ -12,7 +12,7 @@ jobs:
       run:
         shell: powershell
     env:
-      ODOO_CUSTOM_ADDONS_DIR: "C:\Program Files\Odoo 18.0.20250505\server\custom_addons"
+      ODOO_CUSTOM_ADDONS_DIR: "C:\\Program Files\\Odoo 18.0.20250505\\server\\custom_addons"
       ODOO_SERVICE_NAME: "odoo-server-18.0"
 
     steps:
