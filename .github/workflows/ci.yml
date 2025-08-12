@@ -23,9 +23,8 @@ jobs:
 
       - name: Stop Odoo service
         run: |
-          sc.exe stop "$env:ODOO_SERVICE_NAME"
+          Stop-Service -Name $env:ODOO_SERVICE_NAME -Force
           Start-Sleep -Seconds 15
-
         shell: powershell
 
 
