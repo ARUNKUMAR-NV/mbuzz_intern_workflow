@@ -29,8 +29,7 @@ jobs:
           if ($LASTEXITCODE -lt 8) { exit 0 } else { exit $LASTEXITCODE }
 
       - name: Upgrade All Modules in Odoo
-        run: |
-          cmd /c "cd C:\Program Files\Odoo 18.0.20250505\server && python odoo-bin -c odoo.conf -u all --stop-after-init"
+        run: cmd /c "cd C:\Program Files\Odoo 18.0.20250505\server && python odoo-bin -c odoo.conf -u all --stop-after-init"
 
       - name: Restart Odoo service
         run: |
