@@ -19,11 +19,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Stop Odoo service
-        run: |
-          Stop-Service -Name $env:ODOO_SERVICE_NAME -Force
-          Start-Sleep -Seconds 15
-
       - name: Copy all modules (exclude .github, .gitignore, and .git)
         run: |
           $repoRoot = (Resolve-Path "$PWD").Path
@@ -34,11 +29,11 @@ jobs:
           
           if ($LASTEXITCODE -lt 8) { exit 0 } else { exit $LASTEXITCODE }
 
-
-      - name: Start Odoo service
+      - name: Restart Odoo service
         run: |
-          sc.exe start "$env:ODOO_SERVICE_NAME"
+          Restart-Service -Name $env:ODOO_SERVICE_NAME -Force
           Start-Sleep -Seconds 15
+
 
       - name: Done
         run: Write-Host "All modules deployed. Update Apps List in Odoo to see changes."
