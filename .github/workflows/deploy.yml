@@ -34,7 +34,7 @@ jobs:
           cd "C:\Program Files\Odoo 18.0.20250505\server" && "F:\Python\python.exe" odoo-bin -c odoo.conf -u all --stop-after-init
 
       - name: Restart Odoo service
-        shell: pwsh
+        shell: powershell
         run: |
           Restart-Service -Name $env:ODOO_SERVICE_NAME -Force
           Start-Sleep -Seconds 15
