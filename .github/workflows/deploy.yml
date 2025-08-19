@@ -36,7 +36,8 @@ jobs:
       - name: Restart Odoo service
         shell: powershell
         run: |
-          Restart-Service -Name $env:ODOO_SERVICE_NAME -Force
+          Stop-Service -Name $env:ODOO_SERVICE_NAME -Force -ErrorAction SilentlyContinue
+          Start-Service -Name $env:ODOO_SERVICE_NAME
           Start-Sleep -Seconds 15
 
       - name: Done
