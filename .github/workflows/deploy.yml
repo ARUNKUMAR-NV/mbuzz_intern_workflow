@@ -37,8 +37,9 @@ jobs:
         shell: powershell
         run: |
           Stop-Service -Name $env:ODOO_SERVICE_NAME -Force -ErrorAction SilentlyContinue
+          Start-Sleep -Seconds 5
           Start-Service -Name $env:ODOO_SERVICE_NAME
-          Start-Sleep -Seconds 15
+          Start-Sleep -Seconds 30
 
       - name: Done
         run: Write-Host "All modules deployed and upgraded."
