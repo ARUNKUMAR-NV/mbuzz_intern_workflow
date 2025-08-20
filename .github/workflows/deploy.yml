@@ -13,7 +13,8 @@ jobs:
         shell: powershell
     env:
       ODOO_CUSTOM_ADDONS_DIR: "C:\\Program Files\\Odoo 18.0.20250505\\server\\custom_addons"
-      ODOO_SERVICE_NAME: "odoo-server-18.0"
+      ODOO_SERVICE_NAME: "OdooService"
+      NSSM_PATH: "C:\\Program Files\\Odoo 18.0.20250505\\nssm\\win64\\nssm.exe"
 
     steps:
       - name: Checkout repository
@@ -28,18 +29,21 @@ jobs:
           
           if ($LASTEXITCODE -lt 8) { exit 0 } else { exit $LASTEXITCODE }
 
+      - name: Stop Odoo service (NSSM)
+        run: |
+          & "$env:NSSM_PATH" stop $env:ODOO_SERVICE_NAME
+          Start-Sleep -Seconds 10
+
       - name: Upgrade All Modules in Odoo
         shell: cmd
-        run: | 
-          cd "C:\Program Files\Odoo 18.0.20250505\server" && "F:\Python\python.exe" odoo-bin -c odoo.conf -u all --stop-after-init
-
-      - name: Restart Odoo service
-        shell: powershell
         run: |
-          Stop-Service -Name $env:ODOO_SERVICE_NAME -Force -ErrorAction SilentlyContinue
-          Start-Sleep -Seconds 5
-          Start-Service -Name $env:ODOO_SERVICE_NAME
-          Start-Sleep -Seconds 30
+          cd "C:\Program Files\Odoo 18.0.20250505\server" && ^
+          "F:\Python\python.exe" odoo-bin -c odoo.conf -u all --stop-after-init
+
+      - name: Start Odoo service (NSSM)
+        run: |
+          & "$env:NSSM_PATH" start $env:ODOO_SERVICE_NAME
+          Start-Sleep -Seconds 20
 
       - name: Done
-        run: Write-Host "All modules deployed and upgraded."
+        run: Write-Host "All modules deployed and upgraded successfully."
