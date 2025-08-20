@@ -33,7 +33,7 @@ jobs:
         shell: cmd
         run: |
           cd "C:\Program Files\Odoo 18.0.20250505\server" && ^
-          "F:\Python\python.exe" odoo-bin -c odoo.conf -d odoo_deploy -u mbuzz_intern_deploy
+          "F:\Python\python.exe" odoo-bin -c odoo.conf -d odoo_deploy -u mbuzz_intern_deploy --stop-after-init
 
       - name: Done
         run: Write-Host "All modules deployed and upgraded."
