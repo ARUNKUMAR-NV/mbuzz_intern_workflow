@@ -29,11 +29,6 @@ jobs:
           
           if ($LASTEXITCODE -lt 8) { exit 0 } else { exit $LASTEXITCODE }
 
-      - name: Stop Odoo service (NSSM)
-        run: |
-          & "$env:NSSM_PATH" stop $env:ODOO_SERVICE_NAME
-          Start-Sleep -Seconds 10
-
       - name: Upgrade All Modules in Odoo
         shell: cmd
         run: |
