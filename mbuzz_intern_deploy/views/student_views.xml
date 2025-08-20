@@ -38,7 +38,7 @@
 
     <!-- ============ WINDOW ACTION ============ -->
     <record id="mbuzz_intern_action" model="ir.actions.act_window">
-        <field name="name">MBUZZ Interns</field>
+        <field name="name">MBUZZ Interns 2025</field>
         <field name="res_model">mbuzz.intern</field>
         <field name="view_mode">list,form</field>
     </record>
