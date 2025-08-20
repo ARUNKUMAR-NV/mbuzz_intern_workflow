@@ -35,10 +35,5 @@ jobs:
           cd "C:\Program Files\Odoo 18.0.20250505\server" && ^
           "F:\Python\python.exe" odoo-bin -c odoo.conf -u all --stop-after-init
 
-      - name: Start Odoo service (NSSM)
-        run: |
-          & "$env:NSSM_PATH" start $env:ODOO_SERVICE_NAME
-          Start-Sleep -Seconds 20
-
       - name: Done
         run: Write-Host "All modules deployed and upgraded successfully."
