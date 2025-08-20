@@ -36,4 +36,4 @@ jobs:
           "F:\Python\python.exe" odoo-bin -c odoo.conf -u all --stop-after-init
 
       - name: Done
-        run: Write-Host "All modules deployed and upgraded successfully."
+        run: Write-Host "All modules deployed and upgraded."
