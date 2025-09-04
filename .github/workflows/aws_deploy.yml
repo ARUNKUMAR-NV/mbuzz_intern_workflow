@@ -22,7 +22,7 @@ jobs:
           username: ubuntu
           key: ${{ secrets.AWS_SSH_KEY }}
           source: "./"
-          target: "/opt/odoo/custom_addons"
+          target: "/opt/odoo/odoo/custom_addons"
           rm: true
           strip_components: 1
           exclude: |
