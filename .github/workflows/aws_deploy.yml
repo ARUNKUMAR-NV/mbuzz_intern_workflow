@@ -38,7 +38,7 @@ jobs:
         with:
           host: ${{ secrets.AWS_HOST }}
           username: ubuntu
-          key: ${{ secrets.AWS_SSH_KEY }}
+          key: ${{ secrets.AWS_DEPLOY_KEY }}
           script: |
             echo "Reloading systemd and restarting Odoo service..."
             sudo systemctl daemon-reload
