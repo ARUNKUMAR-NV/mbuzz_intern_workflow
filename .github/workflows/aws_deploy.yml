@@ -20,7 +20,7 @@ jobs:
         with:
           host: ${{ secrets.AWS_HOST }}
           username: ubuntu
-          key: ${{ secrets.AWS_SSH_KEY }}
+          key: ${{ secrets.AWS_DEPLOY_KEY }}
           source: "./"
           target: "/opt/odoo/odoo/custom_addons"
           rm: true
