@@ -40,9 +40,10 @@ jobs:
           username: ubuntu
           key: ${{ secrets.AWS_DEPLOY_KEY }}
           script: |
-            echo "Reloading systemd and restarting Odoo service..."
-            sudo systemctl daemon-reload
-            sudo systemctl stop odoo
-            sudo systemctl start odoo
+            echo "Upgrading all modules..."
+            cd /opt/odoo/odoo
+            python3 odoo-bin -c /etc/odoo.conf -d MBUZZ -u all --stop-after-init
+            echo "restarting Odoo service..."
+            sudo systemctl restart odoo
             sudo systemctl status odoo --no-pager
             echo "Odoo service restarted successfully."
