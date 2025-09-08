@@ -1,0 +1,49 @@
+name: Deploy Odoo Custom Modules to AWS
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout your repository
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Step 2: Copy custom modules to AWS EC2
+      - name: Copy custom modules to AWS EC2 (exclude unnecessary files)
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.AWS_HOST }}
+          username: ubuntu
+          key: ${{ secrets.AWS_DEPLOY_KEY }}
+          source: "./"
+          target: "/opt/odoo/odoo/custom_addons"
+          rm: true
+          strip_components: 1
+          exclude: |
+            .git*
+            .github
+            .gitignore
+            README.md
+            LICENSE
+
+      # Step 3: Restart Odoo service on AWS EC2
+      - name: Restart Odoo Service
+        uses: appleboy/ssh-action@v0.1.8
+        with:
+          host: ${{ secrets.AWS_HOST }}
+          username: ubuntu
+          key: ${{ secrets.AWS_DEPLOY_KEY }}
+          script: |
+            echo "Upgrading all modules..."
+            cd /opt/odoo/odoo
+            python3 odoo-bin -c /etc/odoo.conf -d MBUZZ -u all --stop-after-init
+            echo "restarting Odoo service..."
+            sudo systemctl restart odoo
+            sudo systemctl status odoo --no-pager
+            echo "Odoo service restarted successfully."
