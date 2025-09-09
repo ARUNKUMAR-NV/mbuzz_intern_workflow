@@ -47,3 +47,20 @@ jobs:
             sudo systemctl restart odoo
             sudo systemctl status odoo --no-pager
             echo "Odoo service restarted successfully."
+            
+      - name: Notify Teams on Success
+        if: success()
+        run: |
+          curl -H 'Content-Type: application/json' \
+               -d "{\"text\": \"✅ Odoo deployment successful! Commit: ${{ github.sha }} by ${{ github.actor }}\"}" \
+               ${{ secrets.TEAMS_WEBHOOK_URL }}
+          
+      - name: Notify Teams on Failure
+        if: failure()
+        run: |
+          curl -H 'Content-Type: application/json' \
+               -d "{\"text\": \"🚨 Odoo deployment FAILED! Commit: ${{ github.sha }} by ${{ github.actor }}. Please check logs.\"}" \
+               ${{ secrets.TEAMS_WEBHOOK_URL }}
+
+
+      
