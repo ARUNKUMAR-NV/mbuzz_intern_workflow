@@ -54,25 +54,28 @@ jobs:
           curl -X POST "${{ secrets.TEAMS_WEBHOOK_URL }}" \
             -H "Content-Type: application/json" \
             -d '{
-                  \"status\": \"SUCCESS\",
-                  \"pipeline\": \"Odoo CI/CD\",
-                  \"pushed_by\": \"${{ github.actor }}\",
-                  \"commit\": \"${{ github.sha }}\",
-                  \"message\": \"✅ Deployment completed successfully\"
-                }'
-          
+              "status": "SUCCESS",
+              "pipeline": "Odoo CI/CD",
+              "pushed_by": "'"${{ github.actor }}"'",
+              "commit": "'"${{ github.sha }}"'",
+              "commit_message": "'"${{ github.event.head_commit.message }}"'",
+              "message": "✅ Deployment completed successfully"
+            }'
+
       - name: Notify Teams (Failure)
         if: failure()
         run: |
           curl -X POST "${{ secrets.TEAMS_WEBHOOK_URL }}" \
             -H "Content-Type: application/json" \
-            -d "{
-                  \"status\": \"FAILED\",
-                  \"pipeline\": \"Odoo CI/CD\",
-                  \"pushed_by\": \"${{ github.actor }}\",
-                  \"commit\": \"${{ github.sha }}\",
-                  \"message\": \"🚨 Deployment failed. Check logs in GitHub Actions.\"
-                }"
+            -d '{
+              "status": "FAILED",
+              "pipeline": "Odoo CI/CD",
+              "pushed_by": "'"${{ github.actor }}"'",
+              "commit": "'"${{ github.sha }}"'",
+              "commit_message": "'"${{ github.event.head_commit.message }}"'",
+              "message": "🚨 Deployment failed. Check logs in GitHub Actions."
+            }'
+
 
 
       
