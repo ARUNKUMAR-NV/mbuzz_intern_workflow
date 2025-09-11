@@ -60,7 +60,7 @@ jobs:
               "commit": "'"${{ github.sha }}"'",
               "commit_url": "'"https://github.com/${{ github.repository }}/commit/${{ github.sha }}"'",
               "commit_message": "'"${{ github.event.head_commit.message }}"'",
-              "message": "✅ Deployment completed successfully"
+              "message": "✅ Deployment completed successfully in repo"
             }'
 
 
